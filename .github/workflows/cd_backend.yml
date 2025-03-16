@@ -15,7 +15,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       
-      - name: Build and push #it will run docker build and then push it to docker hub
+      - name: Build and push #it will run docker build and then push it to docker hub zzz
         uses: docker/build-push-action@v4
         with:
           context: .
