@@ -1,4 +1,4 @@
-name: Deploy the websocket backend
+name: Deploy the websocket server
 on:
   push:
     branches: [ master ]
@@ -21,4 +21,10 @@ jobs:
           context: .
           file: ./docker/Dockerfile.ws
           push: true
-          tags: apfossdev/todo-app-websocket:${{ github.sha }}gi
+          tags: apfossdev/todo-app-websocket:${{ github.sha }}
+      
+      - name: Deploy to the VM
+        run: |
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" &> ~/ssh_key
+          chmod 700 /home/runner/ssh_key
+          ssh -o StrictHostKeyChecking=no -i ~/ssh_key root@143.110.249.105 -t "docker stop user_backend && docker run --name user_backend -d -p 8080:8080 apfossdev/todo-app-backend:${{ github.sha }}"
