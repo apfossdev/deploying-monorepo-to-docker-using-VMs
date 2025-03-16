@@ -2,7 +2,7 @@ name: Deploy the backend
 on:
   push:
     branches: [ main ]
-jobs:
+jobs: 
   build:
     runs-on: ubuntu-latest
     steps:
@@ -15,12 +15,10 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       
-      - name: Build and push #it will run docker build and then push it to docker hub zzz
+      - name: Build and push 
         uses: docker/build-push-action@v4
         with:
           context: .
           file: ./docker/Dockerfile.backend
           push: true
-          tags: apfossdev/user-app-backend:${{ github.sha }}
-
-          # need to add steps to deploy to the VM/ or ASG/ or K8s Cluster
+          tags: 100xdevs/todo-app-backend:${{ github.sha }}
